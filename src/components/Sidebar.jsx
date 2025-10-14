@@ -1,9 +1,10 @@
+import { Link, useLocation } from "react-router-dom";
 import { sidebarItems } from "../data/sidebarItems";
 import * as Icons from "lucide-react";
 
-import React from "react";
+function Sidebar() {
+  const location = useLocation();
 
-export default function Sidebar() {
   return (
     <aside className="w-64 bg-white shadow-md h-screen p-4 border-r border-gray-200">
       <div className="flex items-center gap-3 mb-8">
@@ -11,25 +12,34 @@ export default function Sidebar() {
           MG
         </div>
         <div>
-          <p className="text-sm font-semibold">Nombre del paciente</p>
+          <p className="text-sm font-semibold">María González</p>
           <p className="text-xs text-gray-500">MED-2024-004</p>
         </div>
       </div>
 
       <nav>
-        {sidebarItems.map(({ id, title, icon }) => {
+        {sidebarItems.map(({ id, title, icon, path }) => {
           const Icon = Icons[icon];
+          const isActive = location.pathname === path;
+          
           return (
-            <button
+            <Link
               key={id}
-              className="flex items-center gap-3 p-2 text-gray-700 rounded-lg hover:text-blue-600 transition"
+              to={path}
+              className={`flex items-center gap-3 p-3 rounded-lg transition-colors mb-1 ${
+                isActive
+                  ? "bg-blue-50 text-blue-600 font-medium"
+                  : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+              }`}
             >
               <Icon size={18} />
               <span>{title}</span>
-            </button>
+            </Link>
           );
         })}
       </nav>
     </aside>
   );
 }
+
+export default Sidebar;

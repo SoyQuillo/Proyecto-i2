@@ -71,7 +71,6 @@ function Navbar() {
 
        
         <div className="flex items-center gap-6 w-[400px] justify-end">
-          {/* BUSCADOR */}
           <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1.5 w-[220px] focus-within:ring-2 focus-within:ring-blue-500">
             <Search className="text-gray-400" size={18} />
             <input
