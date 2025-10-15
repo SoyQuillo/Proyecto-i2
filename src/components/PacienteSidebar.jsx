@@ -6,13 +6,20 @@ function PacienteSidebar( {onSelectPaciente}) {
   const [criterio, setCriterio] = useState("nombre");
   const [vista, setVista] = useState("Criticos");
   const [busqueda, setBusqueda] = useState("");
-  const consulta = pacientesRecientes.filter((n) => n.tipo === "En consulta");
-  const criticos = pacientesRecientes.filter((n) => n.tipo === "Criticos");
+  // defensiva: si pacientesRecientes no está definido, usar array vacío
+  const lista = Array.isArray(pacientesRecientes) ? pacientesRecientes : [];
+  const consulta = lista.filter((n) => n.tipo === "En consulta");
+  const criticos = lista.filter((n) => n.tipo === "Criticos");
   const pacientesAMostrar = vista === "Criticos" ? criticos : consulta;
 
   const pacientesFiltrados = pacientesAMostrar.filter((n) =>
     n.nombre.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())
   );
+
+  // útil para depuración: mostrar cuántos pacientes hay en cada categoría
+  // (se puede eliminar más tarde)
+  // eslint-disable-next-line no-console
+  console.log('pacientesRecientes total=', lista.length, 'criticos=', criticos.length, 'consulta=', consulta.length);
 
   return (
     <aside className="w-80 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 flex flex-col p-4 fixed top-16 left-0 shadow-sm z-40">
@@ -67,44 +74,48 @@ function PacienteSidebar( {onSelectPaciente}) {
           Pacientes recientes
         </h3>
 
-        {pacientesFiltrados.map((p) => (
-          <div
-            key={p.id}
-            onClick={()=> onSelectPaciente(p)}
-            className="flex items-start gap-3 p-3 mb-2 rounded-lg hover:bg-blue-50 cursor-pointer transition-all border border-transparent hover:border-blue-100"
-          >
-            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold shadow-sm">
-              {p.nombre
-                .split(" ")
-                .map((n) => n[0])
-                .slice(0, 2)
-                .join("")}
+        {pacientesFiltrados.length === 0 ? (
+          <p className="text-sm text-gray-500">No hay pacientes recientes para mostrar.</p>
+        ) : (
+          pacientesFiltrados.map((p) => (
+            <div
+              key={p.id}
+              onClick={() => onSelectPaciente(p)}
+              className="flex items-start gap-3 p-3 mb-2 rounded-lg hover:bg-blue-50 cursor-pointer transition-all border border-transparent hover:border-blue-100"
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white text-sm font-semibold shadow-sm">
+                {p.nombre
+                  .split(" ")
+                  .map((n) => n[0])
+                  .slice(0, 2)
+                  .join("")}
+              </div>
+              <div className="flex flex-col leading-tight">
+                <p className="text-sm font-semibold text-gray-800">{p.nombre}</p>
+                <p className="text-xs text-gray-500">{p.usuario}</p>
+                <p className="text-xs text-gray-500">
+                  {p.edad} años · {p.sexo} ·{" "}
+                  <span
+                    className={`font-medium ${
+                      p.estado === "Activo"
+                        ? "text-green-600"
+                        : p.estado === "En consulta"
+                        ? "text-blue-600"
+                        : p.estado === "Recuperacion"
+                        ? "text-yellow-600"
+                        : "text-orange-600"
+                    }`}
+                  >
+                    {p.estado}
+                  </span>
+                </p>
+                <p className="text-xs text-gray-400">
+                  {p.lugar} · {p.especialidad}
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col leading-tight">
-              <p className="text-sm font-semibold text-gray-800">{p.nombre}</p>
-              <p className="text-xs text-gray-500">{p.usuario}</p>
-              <p className="text-xs text-gray-500">
-                {p.edad} años · {p.sexo} ·{" "}
-                <span
-                  className={`font-medium ${
-                    p.estado === "Activo"
-                      ? "text-green-600"
-                      : p.estado === "En consulta"
-                      ? "text-blue-600"
-                      : p.estado === "Recuperacion"
-                      ? "text-yellow-600"
-                      : "text-orange-600"
-                  }`}
-                >
-                  {p.estado}
-                </span>
-              </p>
-              <p className="text-xs text-gray-400">
-                {p.lugar} · {p.especialidad}
-              </p>
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       <button className="mt-4 flex items-center justify-center gap-2 text-blue-600 text-sm font-medium py-2 border-t border-gray-200 hover:text-blue-700 transition">

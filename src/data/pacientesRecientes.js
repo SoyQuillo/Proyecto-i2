@@ -8,7 +8,10 @@ export const pacientesRecientes = [
     tipoSangre: "O+",
     compañiaSeguro: "Colsanitas",
     especialidad: "Cardiologia",
-    doctorId: 1 
+    doctorId: 1,
+    tipo: "Criticos",
+    estado: "Activo",
+    lugar: "UCI - Piso 2"
   },
   {
     id: 2,
@@ -19,7 +22,10 @@ export const pacientesRecientes = [
     tipoSangre: "A+",
     compañiaSeguro: "Sura",
     especialidad: "Urgencias",
-    doctorId: 2
+    doctorId: 2,
+    tipo: "En consulta",
+    estado: "En consulta",
+    lugar: "Urgencias - Box 3"
   },
   {
     id: 3,
@@ -30,7 +36,10 @@ export const pacientesRecientes = [
     tipoSangre: "B+",
     compañiaSeguro: "Coomeva",
     especialidad: "Cirugia",
-    doctorId: 2
+    doctorId: 2,
+    tipo: "Criticos",
+    estado: "Recuperacion",
+    lugar: "Sala de recuperación - Piso 1"
   },
   {
     id: 4,
@@ -41,7 +50,10 @@ export const pacientesRecientes = [
     tipoSangre: "AB+",
     compañiaSeguro: "Compensar",
     especialidad: "Observacion",
-    doctorId: 3
+    doctorId: 3,
+    tipo: "En consulta",
+    estado: "En consulta",
+    lugar: "Observación - Box 1"
   },
   {
     id: 5,
@@ -52,7 +64,10 @@ export const pacientesRecientes = [
     tipoSangre: "O-",
     compañiaSeguro: "Sanitas",
     especialidad: "Neumologia",
-    doctorId: 5
+    doctorId: 5,
+    tipo: "Criticos",
+    estado: "Activo",
+    lugar: "Consulta externa - Neumología"
   },
   
 ];
