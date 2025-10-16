@@ -10,19 +10,23 @@ import {
 } from "lucide-react";
 import { alergias } from "../data/alergias";
 
-const alergiasCriticas = alergias.filter((n) => n.nivel === "Crítica");
-const totalAlergias = alergias.length;
-const totalAlergiasSevera = alergias.filter(
-  (n) => n.severidad === "Severa"
-).length;
-const totalAlergiaMedicamentos = alergias.filter(
-  (n) => n.tipo === "Medicamento"
-).length;
-const totalAlergiasAlimentos = alergias.filter(
-  (n) => n.tipo === "Alimento"
-).length;
-
 function MainAlergias({ paciente }) {
+  const pacienteId = paciente?.id || null;
+  const alergiasPaciente = alergias.filter((m) => m.pacienteId === pacienteId);
+
+  const alergiasCriticas = alergiasPaciente.filter(
+    (n) => n.nivel === "Crítica"
+  );
+  const totalAlergias = alergiasPaciente.length;
+  const totalAlergiasSevera = alergiasPaciente.filter(
+    (n) => n.severidad === "Severa"
+  ).length;
+  const totalAlergiaMedicamentos = alergiasPaciente.filter(
+    (n) => n.tipo === "Medicamento"
+  ).length;
+  const totalAlergiasAlimentos = alergiasPaciente.filter(
+    (n) => n.tipo === "Alimento"
+  ).length;
   return (
     <div className="bg-gray-50 min-h-screen p-8">
       <div className="flex items-center gap-3 mb-6">
@@ -79,12 +83,12 @@ function MainAlergias({ paciente }) {
       </div>
 
       <div className="grid gap-6">
-        {alergias.length === 0 ? (
+        {alergiasPaciente.length === 0 ? (
           <div className="bg-white border border-gray-200 rounded-lg p-8 text-center text-gray-500 shadow-sm">
             No hay alergias registradas para este paciente.
           </div>
         ) : (
-          alergias.map((n) => (
+          alergiasPaciente.map((n) => (
             <div
               key={n.id}
               className="bg-white border border-gray-200 rounded-xl shadow-sm p-6"

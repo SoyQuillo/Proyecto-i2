@@ -32,7 +32,7 @@ export const medicamentos = [
     instrucciones: "Tomar después de las comidas.",
     efectosSecundarios: "Náuseas leves, malestar estomacal",
     interacciones: "Alcohol, corticoides",
-    estado: "Activo",
+    estado: "Completados",
     ultimaActualizacion: "2024-09-30"
   }
 ];
