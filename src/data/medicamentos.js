@@ -19,7 +19,7 @@ export const medicamentos = [
   },
   {
     id: 2,
-    pacienteId: 1,
+    pacienteId: 2,
     doctorId: 5,
     nombre: "Metformina",
     dosis: "850 mg",

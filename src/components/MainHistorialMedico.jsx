@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { historialMedico } from "../data/historialMedico";
-import { FileText, AlertTriangle, Scissors, Calendar, User, Stethoscope, Clipboard } from "lucide-react";
+import {
+  FileText,
+  AlertTriangle,
+  Scissors,
+  Calendar,
+  User,
+  Stethoscope,
+  Clipboard,
+} from "lucide-react";
 
 function MainHistorialMedico({ paciente }) {
- 
-  const countTotal = historialMedico.length;
-  const countCriticos = historialMedico.filter((n) => n.nivel === "Crítico").length;
-  const countCirugias = historialMedico.filter((n) => n.tipo === "Cirugía").length;
-  const countSeguimientos = historialMedico.filter((n) => n.tipo === "Seguimiento").length;
+  const pacienteId = paciente?.id || null;
+  const historialPaciente = historialMedico.filter(
+    (n) => n.pacienteId === pacienteId
+  );
 
-  const historialPaciente = historialMedico.filter((n) => n.pacienteId === paciente.id);
-  
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
+
+  const categorias = [
+    "Todos",
+    ...new Set(historialPaciente.map((n) => n.nivel)),
+  ];
+
+  const contarPorCategoria = (categoria) => {
+    if (categoria === "Todos") return historialPaciente.length;
+    return historialPaciente.filter((n) => n.nivel === categoria).length;
+  };
+
+  const resultadosFiltrados =
+    categoriaSeleccionada === "Todos"
+      ? historialPaciente
+      : historialPaciente.filter((n) => n.nivel === categoriaSeleccionada);
+
   const colorNivel = {
     Alto: "text-orange-600",
     Medio: "text-blue-600",
@@ -25,69 +47,67 @@ function MainHistorialMedico({ paciente }) {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      
       <h2 className="text-xl font-semibold text-gray-800 mb-6">
         Historial Médico
       </h2>
 
-      
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl shadow-sm p-4">
-          <FileText className="text-blue-600" size={24} />
-          <div>
-            <div className="text-2xl font-bold text-blue-600">{countTotal}</div>
-            <div className="text-sm text-gray-500">Total Entradas</div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl shadow-sm p-4">
-          <AlertTriangle className="text-red-600" size={24} />
-          <div>
-            <div className="text-2xl font-bold text-red-600">{countCriticos}</div>
-            <div className="text-sm text-gray-500">Críticos</div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl shadow-sm p-4">
-          <Scissors className="text-green-600" size={24} />
-          <div>
-            <div className="text-2xl font-bold text-green-600">{countCirugias}</div>
-            <div className="text-sm text-gray-500">Cirugías</div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl shadow-sm p-4">
-          <Calendar className="text-yellow-600" size={24} />
-          <div>
-            <div className="text-2xl font-bold text-yellow-600">{countSeguimientos}</div>
-            <div className="text-sm text-gray-500">Seguimientos</div>
-          </div>
-        </div>
+        {categorias.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setCategoriaSeleccionada(cat)}
+            className={`flex items-center justify-between p-4 rounded-xl border shadow-sm transition-all 
+              ${
+                categoriaSeleccionada === cat
+                  ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                  : "bg-white border-gray-200 hover:bg-blue-50 text-gray-700"
+              }`}
+          >
+            <span className="font-medium">{cat}</span>
+            <span
+              className={`text-sm font-semibold ${
+                categoriaSeleccionada === cat ? "text-white" : "text-blue-600"
+              }`}
+            >
+              {contarPorCategoria(cat)}
+            </span>
+          </button>
+        ))}
       </div>
 
-     
+      
       <div className="space-y-4">
-        {historialPaciente.map((n, index) => (
+        {resultadosFiltrados.map((n, index) => (
           <div
             key={index}
-            className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md transition-shadow duration-200"
+            className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md transition-all duration-200"
           >
-         
-            <div className="flex justify-between items-center mb-2">
+            
+            <div className="flex justify-between items-center mb-3">
               <div className="flex items-center gap-2">
-                <Clipboard className={`${colorNivel[n.nivel]} shrink-0`} size={20} />
-                <h3 className="text-base font-semibold text-gray-800">{n.diagnostico}</h3>
-                <span className={`text-xs font-medium px-2 py-1 rounded-full ${bgNivel[n.nivel]} ${colorNivel[n.nivel]}`}>
+                <Clipboard
+                  className={`${colorNivel[n.nivel]} shrink-0`}
+                  size={20}
+                />
+                <h3 className="text-base font-semibold text-gray-800">
+                  {n.diagnostico}
+                </h3>
+                <span
+                  className={`text-xs font-medium px-2 py-0.5 rounded-full ${bgNivel[n.nivel]} ${colorNivel[n.nivel]}`}
+                >
                   {n.nivel}
                 </span>
               </div>
-              <button className={`text-sm font-medium ${colorNivel[n.nivel]} hover:underline`}>
+              <button
+                className={`text-sm font-medium ${colorNivel[n.nivel]} hover:underline`}
+              >
                 Más
               </button>
             </div>
 
-          
-            <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-2">
+            
+            <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
               <div className="flex items-center gap-1">
                 <Calendar size={14} /> {n.fecha}
               </div>
@@ -102,10 +122,18 @@ function MainHistorialMedico({ paciente }) {
               </div>
             </div>
 
-           
-            <p className="text-gray-700 text-sm">{n.descripcion}</p>
+            
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {n.descripcion}
+            </p>
           </div>
         ))}
+
+        {resultadosFiltrados.length === 0 && (
+          <div className="text-center py-12 text-gray-500 text-sm border border-dashed rounded-xl bg-white">
+            No se encontraron registros para esta categoría.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ import {
 function MainPaciente({ paciente }) {
   if (!paciente) {
     return (
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-10 w-full max-w-6xl mx-auto text-center text-gray-500 mt-8">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 w-full max-w-6xl mx-auto text-center text-gray-500 mt-10">
         <p className="text-base">
           Selecciona un paciente en la barra lateral para ver su información.
         </p>
@@ -27,10 +27,11 @@ function MainPaciente({ paciente }) {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8 w-full max-w-6xl mx-auto mt-6">
-      <div className="border-b border-gray-200 pb-4 mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-          <UserCircle className="w-6 h-6 text-blue-600" />
+    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-6xl mx-auto mt-6">
+      
+      <div className="border-b border-gray-200 pb-5 mb-8">
+        <h2 className="text-3xl font-bold text-blue-900 flex items-center gap-2">
+          <UserCircle className="w-7 h-7 text-blue-700" />
           Datos del Paciente
         </h2>
         <p className="text-gray-500 text-sm mt-1">
@@ -38,11 +39,12 @@ function MainPaciente({ paciente }) {
         </p>
       </div>
 
-
+   
       <div className="grid grid-cols-2 gap-8 mb-8">
-        <div className="bg-gray-50 rounded-lg p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-            <User className="w-5 h-5 text-blue-600" />
+        
+        <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm hover:bg-blue-50 transition">
+          <h3 className="text-lg font-semibold text-blue-800 mb-6 flex items-center gap-2">
+            <User className="w-5 h-5 text-blue-700" />
             Información Personal
           </h3>
 
@@ -92,9 +94,9 @@ function MainPaciente({ paciente }) {
         </div>
 
         
-        <div className="bg-gray-50 rounded-lg p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-            <Phone className="w-5 h-5 text-blue-600" />
+        <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm hover:bg-blue-50 transition">
+          <h3 className="text-lg font-semibold text-blue-800 mb-6 flex items-center gap-2">
+            <Phone className="w-5 h-5 text-blue-700" />
             Información de Contacto
           </h3>
 
@@ -134,12 +136,12 @@ function MainPaciente({ paciente }) {
         </div>
       </div>
 
-
+      
       <div className="grid grid-cols-2 gap-8">
         {/* Información Médica */}
-        <div className="bg-gray-50 rounded-lg p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-            <Stethoscope className="w-5 h-5 text-blue-600" />
+        <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm hover:bg-blue-50 transition">
+          <h3 className="text-lg font-semibold text-blue-800 mb-6 flex items-center gap-2">
+            <Stethoscope className="w-5 h-5 text-blue-700" />
             Información Médica
           </h3>
 
@@ -162,10 +164,10 @@ function MainPaciente({ paciente }) {
           </div>
         </div>
 
-        {/* Información del Seguro */}
-        <div className="bg-gray-50 rounded-lg p-6 border border-gray-100 shadow-sm">
-          <h3 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-blue-600" />
+       
+        <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm hover:bg-blue-50 transition">
+          <h3 className="text-lg font-semibold text-blue-800 mb-6 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-blue-700" />
             Información del Seguro
           </h3>
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { resultadosLaboratorio } from "../data/resultadosLaboratorio";
-import { Bell } from "lucide-react";
+import { Bell, FlaskConical, FileText } from "lucide-react";
 
 function MainLaboratorio({ paciente }) {
   const pacienteId = paciente?.id || null;
@@ -31,40 +31,45 @@ function MainLaboratorio({ paciente }) {
   const resultadosNuevos = resultadosPaciente.filter((n) => n.nuevo).length;
 
   return (
-    <div>
-      <div>
-        <h1 className="font-black text-4xl text-blue-900">
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+          <FlaskConical className="text-blue-700 w-6 h-6" />
           Resultados de Laboratorio
         </h1>
+        <button className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded-xl shadow hover:bg-blue-800 transition-all">
+          <FileText size={18} /> Descargar Reporte
+        </button>
       </div>
 
-      <div className="mt-4">
-        <div className="flex items-center gap-2 text-blue-800 font-semibold">
-          <Bell />
-          <span>Nuevos Resultados Disponibles</span>
+      <div className="flex items-center gap-3 p-4 bg-blue-100 border border-blue-200 rounded-xl mb-8">
+        <Bell className="text-blue-700" />
+        <div>
+          <p className="font-semibold text-blue-800">
+            Nuevos resultados disponibles
+          </p>
+          <p className="text-sm text-gray-700">
+            Hay {resultadosNuevos} nuevos resultados de laboratorio por revisar.
+          </p>
         </div>
-        <p className="text-gray-700">
-          Hay {resultadosNuevos} nuevos resultados de laboratorio por revisar
-        </p>
       </div>
 
-      <div className="flex gap-6 border-b border-gray-200 mt-8 pb-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {categorias.map((cat) => (
           <button
             key={cat}
             onClick={() => setCategoriaSeleccionada(cat)}
-            className={`flex items-center gap-2 text-sm font-semibold ${
-              categoriaSeleccionada === cat
-                ? "text-blue-700 border-b-2 border-blue-700"
-                : "text-gray-600 hover:text-blue-700"
-            }`}
-          >
-            {cat}
-            <span
-              className={`text-xs font-bold ${
+            className={`flex items-center justify-between p-4 rounded-xl border shadow-sm transition-all 
+              ${
                 categoriaSeleccionada === cat
-                  ? "text-blue-700"
-                  : "text-gray-500"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                  : "bg-white border-gray-200 hover:bg-blue-50 text-gray-700"
+              }`}
+          >
+            <span className="font-medium">{cat}</span>
+            <span
+              className={`text-sm font-semibold ${
+                categoriaSeleccionada === cat ? "text-white" : "text-blue-600"
               }`}
             >
               {contarPorCategoria(cat)}
@@ -73,38 +78,47 @@ function MainLaboratorio({ paciente }) {
         ))}
       </div>
 
-      <div className="mt-8 space-y-4">
+      <div className="space-y-4">
         {resultadosFiltrados.length > 0 ? (
           resultadosFiltrados.map((n) => (
             <div
               key={n.id}
-              className="border p-4 rounded-2xl shadow-sm bg-white hover:bg-blue-50 transition"
+              className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md transition-all duration-200"
             >
-              <div className="flex justify-between">
-                <h2 className="font-bold text-lg text-blue-900">{n.examen}</h2>
-                {n.nuevo && (
-                  <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                    Nuevo
-                  </span>
-                )}
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2">
+                  <FlaskConical className="text-blue-700 shrink-0" size={20} />
+                  <h2 className="text-base font-semibold text-gray-800">
+                    {n.examen}
+                  </h2>
+                  {n.nuevo && (
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                      Nuevo
+                    </span>
+                  )}
+                </div>
+                <span className="text-sm text-gray-500">
+                  {n.fechaResultado}
+                </span>
               </div>
 
-              <p className="text-sm text-gray-600">
-                <strong>Fecha resultado:</strong> {n.fechaResultado}
-              </p>
-              <p className="text-sm text-gray-600">
-                <strong>Doctor:</strong> {n.doctor} ({n.especialidad})
-              </p>
+              <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
+                <div>
+                  <strong>Doctor:</strong> {n.doctor}
+                </div>
+                <div>
+                  <strong>Especialidad:</strong> {n.especialidad}
+                </div>
+              </div>
 
-              
-              <div className="mt-2 text-sm text-gray-700">
+              <div className="text-sm text-gray-700">
                 {n.resultados.map((r, idx) => (
-                  <p key={idx}>
+                  <p key={idx} className="mb-1">
                     • {r.parametro}:{" "}
                     <span className="font-semibold">{r.valor}</span> {r.unidad}{" "}
                     —{" "}
                     <span
-                      className={`${
+                      className={`font-semibold ${
                         r.estado === "Alto"
                           ? "text-red-600"
                           : r.estado === "Bajo"
@@ -117,12 +131,17 @@ function MainLaboratorio({ paciente }) {
                   </p>
                 ))}
               </div>
+
+              {/* PIE */}
+              <p className="text-xs text-gray-400 mt-3">
+                Última actualización: {n.fechaResultado}
+              </p>
             </div>
           ))
         ) : (
-          <p className="text-gray-500">
-            No hay resultados para esta categoría.
-          </p>
+          <div className="text-center py-12 text-gray-500 text-sm border border-dashed rounded-xl bg-white">
+            No se encontraron resultados para esta categoría.
+          </div>
         )}
       </div>
     </div>
