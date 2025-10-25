@@ -14,7 +14,7 @@ function Pacientes() {
   const ComponenteActivo = itemActivo?.componente || MainPaciente;
 
   return (
-    <div className="flex bg-gray-50 min-h-screen pt-16">
+    <div className="flex bg-gray-50 min-h-screen">
       <PacienteSidebar onSelectPaciente={setPacienteSeleccionado} />
 
       <main className="flex-1 ml-80 p-8 overflow-y-auto space-y-6">

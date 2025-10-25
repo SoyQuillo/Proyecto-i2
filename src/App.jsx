@@ -1,38 +1,56 @@
 import "./App.css";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Citas from "./pages/Citas";
-import Pacientes from "./pages/Pacientes";
-import Inventario from "./pages/Inventario";
+import Login from "./features/auth/components/Login";
+import Register from "./features/auth/components/Register";
+import EmployeeLayout from "./shared/layouts/EmployeeLayout";
+import ClientLayout from "./shared/layouts/ClientLayout";
+import { usuarios } from "./features/auth/data/usuarios";
 
 function App() {
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navbar />
-      
-      <Routes>
-        <Route path="/pacientes" element={<Pacientes />} />
-        <Route path="/*" element={
-          <div className="flex flex-1">
-            <div className="w-64 fixed top-16 left-0 h-[calc(100vh-4rem)] border-r bg-white shadow-sm">
-              <Sidebar />
-            </div>
+  const [authUser, setAuthUser] = useState(null);
 
-            <main className="flex-1 ml-64 mt-16 px-8 py-6 space-y-6">
-              <Routes>
-                <Route path="/dashboard" element={<Home />} />
-                <Route path="/citas" element={<Citas />} />
-                <Route path="/inventario" element={<Inventario />} />
-                <Route path="/" element={<Home />} />
-              </Routes>
-            </main>
-          </div>
-        } />
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("authUser");
+      if (raw) setAuthUser(JSON.parse(raw));
+    } catch (e) {
+      console.error("Error loading user:", e);
+    }
+  }, []);
+
+  const handleLogin = ({ documento, usuario, contrasena, tipoUsuario }) => {
+    const matched = usuarios.find(
+      (u) =>
+        ((usuario && u.usuario === usuario) || (documento && u.documento === documento)) &&
+        u.rol === tipoUsuario
+    );
+    if (!matched) {
+      alert(`No se encontró un ${tipoUsuario} con esas credenciales`);
+      return;
+    }
+    if (matched.contrasena !== contrasena) {
+      alert("Contraseña incorrecta");
+      return;
+    }
+    setAuthUser(matched);
+    localStorage.setItem("authUser", JSON.stringify(matched));
+  };
+
+  if (!authUser) {
+    return (
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Login onSubmit={handleLogin} />} />
       </Routes>
-    </div>
-  );
+    );
+  }
+
+  if (authUser.rol === "cliente") {
+    return <ClientLayout user={authUser} />;
+  }
+
+  return <EmployeeLayout />;
 }
 
 export default App;

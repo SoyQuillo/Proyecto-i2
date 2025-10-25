@@ -1,16 +1,137 @@
-# React + Vite
+# 🏥 HospitalIS Pro - Sistema de Gestión Hospitalaria
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema integral de gestión hospitalaria con dashboards diferenciados para empleados y clientes/pacientes, incluyendo gestión completa de inventarios médicos.
 
-Currently, two official plugins are available:
+## ✨ Características Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 👨‍⚕️ Dashboard para Empleados
+- 📊 Panel de estadísticas y métricas del hospital
+- 📅 Gestión completa de citas médicas
+- 📦 **Sistema de Inventario Completo** (Nuevo)
+  - CRUD de productos médicos
+  - Control de stock con alertas automáticas
+  - Gestión de proveedores y categorías
+  - Múltiples vistas (lista/cuadrícula)
+  - Exportación de datos
+- 👥 Gestión de pacientes con historiales detallados
 
-## React Compiler
+### 🧑‍⚕️ Dashboard para Clientes/Pacientes
+- 🏠 Dashboard personalizado con información relevante
+- 📅 Visualización y gestión de citas
+- 📋 Historial médico completo
+- 💊 Control de medicamentos activos
+- 🔬 Resultados de laboratorio e imágenes
+- 📞 Contacto directo con el hospital
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Inicio Rápido
 
-## Expanding the ESLint configuration
+```bash
+# Instalar dependencias
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Iniciar servidor de desarrollo
+npm run dev
+
+# El proyecto estará disponible en http://localhost:5173
+```
+
+## 👤 Usuarios de Prueba
+
+### Empleados del Hospital:
+| Usuario | Contraseña | Documento | Rol |
+|---------|-----------|-----------|-----|
+| admin | admin123 | 10203040 | Administrador |
+| maria.gomez | pass123 | 100200300 | Médico |
+| juan.perez | juan2024 | 200300400 | Enfermero |
+
+### Clientes/Pacientes:
+| Usuario | Contraseña | Documento |
+|---------|-----------|-----------|
+| carlos.lopez | carlos123 | 300400500 |
+| ana.rodriguez | ana2024 | 400500600 |
+| luis.martinez | luis456 | 500600700 |
+
+## 📁 Estructura del Proyecto
+
+El proyecto sigue una arquitectura modular basada en features:
+
+```
+src/
+├── features/           # Módulos por característica
+│   ├── auth/          # Autenticación
+│   ├── employees/     # Dashboard empleados
+│   ├── clients/       # Dashboard clientes
+│   └── inventory/     # Sistema inventario
+├── shared/            # Componentes compartidos
+│   ├── components/    # Navbars, Sidebars
+│   └── layouts/       # Layouts por rol
+├── data/              # Datos JSON
+└── pages/             # Páginas legacy
+```
+
+Ver [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) para más detalles.
+
+## 🛠️ Tecnologías
+
+- **React 19.1** - Framework UI
+- **React Router DOM 7.9** - Enrutamiento
+- **Tailwind CSS 4.1** - Estilos
+- **Lucide React** - Iconos
+- **Vite 7.1** - Build tool
+- **JSON** - Almacenamiento de datos
+
+## 📦 Sistema de Inventario
+
+El sistema incluye gestión completa de inventario con:
+
+- ✅ 15 productos de ejemplo (medicamentos, equipos, insumos)
+- ✅ 3 categorías con subcategorías
+- ✅ 6 proveedores configurados
+- ✅ Control de stock y alertas
+- ✅ Gestión de vencimientos
+- ✅ Historial de movimientos
+- ✅ Búsqueda y filtros avanzados
+
+## 🎨 Características de UI/UX
+
+- 🎨 Diseño moderno y profesional
+- 📱 Responsive design
+- ✨ Animaciones y transiciones suaves
+- 🎯 Navegación intuitiva según rol
+- 🔔 Sistema de notificaciones
+- 🌈 Paleta de colores consistente
+- ⚡ Rendimiento optimizado
+
+## 🔐 Sistema de Roles
+
+El sistema diferencia automáticamente entre:
+
+1. **Empleados**: Acceso completo al sistema, gestión de inventario, pacientes y citas
+2. **Clientes**: Vista personalizada de su información médica, citas y resultados
+
+## 📝 Scripts Disponibles
+
+```bash
+npm run dev      # Modo desarrollo
+npm run build    # Build producción
+npm run preview  # Preview del build
+npm run lint     # Linter
+```
+
+## 🔄 Próximas Funcionalidades
+
+- [ ] Integración con backend real
+- [ ] Autenticación JWT
+- [ ] Sistema de reportes
+- [ ] Notificaciones en tiempo real
+- [ ] Exportación de reportes PDF
+- [ ] Sistema de facturación
+- [ ] Telemedicina integrada
+
+## 📄 Licencia
+
+Proyecto educativo - HospitalIS Pro
+
+---
+
+**Desarrollado con ❤️ para gestión hospitalaria moderna**

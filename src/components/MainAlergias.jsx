@@ -47,7 +47,6 @@ function MainAlergias({ paciente }) {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Encabezado */}
       <div className="flex items-center gap-3 mb-6">
         <AlertTriangle className="text-blue-700 w-6 h-6" />
         <h2 className="text-xl font-semibold text-gray-800">
